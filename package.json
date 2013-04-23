@@ -1,6 +1,6 @@
 {
   "name": "grunt-peaches",
-  "description": "The Grunt plugin for peaches.",
+  "description": "The Grunt task for peaches.",
   "version": "0.1.0",
   "author": {
     "name": "afc163",
