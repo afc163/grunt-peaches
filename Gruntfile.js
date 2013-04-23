@@ -33,9 +33,11 @@ module.exports = function(grunt) {
       default_options: {
         options: {
         },
-        files: {
-          'tmp/sprites.css': ['test/fixtures/example.css']
-        },
+        files: [{
+          cwd: 'test/fixtures/',
+          src: '**/*.css',
+          dest: 'tmp'
+        }]
       }
     },
 

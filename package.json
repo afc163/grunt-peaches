@@ -23,8 +23,7 @@
     "grunt": "~0.4.1"
   },
   "peerDependencies": {
-    "grunt": "~0.4.1",
-    "cssbeautify": "~0.3.0"
+    "grunt": "~0.4.1"
   },
   "keywords": [
     "gruntplugin"
