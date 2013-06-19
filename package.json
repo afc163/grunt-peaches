@@ -1,7 +1,7 @@
 {
   "name": "grunt-peaches",
   "description": "The Grunt task for peaches.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "afc163",
     "email": "afc163@gmail.com"
