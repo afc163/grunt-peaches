@@ -14,7 +14,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "peaches": "~0.4.1"
+    "peaches": "~0.5.3"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.1",
