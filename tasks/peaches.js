@@ -20,16 +20,28 @@ module.exports = function(grunt) {
     var done = this.async();
 
     // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      server: {
-        "name":"alipay",
-        "root":"./",
-        "username":"liuqin.sheng",
-        "tmp":"./tmp",
-        "baseURI":"https://i.alipayobjects.com",
-        "uploadUrl":"https://ecmng.alipay.com/home/uploadFile.json"
+      var options = this.options({
+        model: "alipay",
+        servers: {
+          "alipay": {
+            "name":"alipay",
+            "root":"./tmp",
+            "username":"liuqin.sheng",
+            "tmp":"./tmp",
+            "baseURI":"https://i.alipayobjects.com",
+            "uploadUrl":"https://ecmng.alipay.com/home/uploadFile.json"
+          },
+            "tfsdaily": {
+              "name": "tfsdaily",
+              "root": "./images",
+              "tmp": "./tmp"
+            }
+          }
+      });
+
+      if(!options.server){
+        options.server = options.servers[options.model];
       }
-    });
 
     var fname, destfile, src;
     this.files.forEach(function(fileObj) {
