@@ -43,49 +43,45 @@ module.exports = function(grunt) {
         options.server = options.servers[options.model];
       }
 
-    var fname, destfile, src;
-    this.files.forEach(function(fileObj) {
-      fileObj.src.forEach(function(fpath) {
+    var destfile, src, srcContent;
 
-        if (fpath.indexOf('-debug.css') > 0) {
-            return;
-        }
-        
-        // get the right filename and filepath
-        if (fileObj.cwd) {
-          // not expanded
-          fname = fpath;
-          fpath = path.join(fileObj.cwd, fpath);
-        } else {
-          fname = path.relative(fileObj.orig.cwd || '', fpath);
-        }
-        if (grunt.file.isDir(fpath)) {
-          grunt.file.mkdir(fpath);
+    this.files.forEach(function(fileObj) {
+      if( fileObj.src.length > 1 ){
+        grunt.log.warn('This plugin don\'t support multi src file mapping to one dest file');
+        return;
+      }
+
+      var src = fileObj.src[0];
+      var destfile = fileObj.dest;
+
+      if (src.indexOf('-debug.css') > 0) {
+          return;
+      }
+
+      if( !grunt.file.isFile(src) ){
+        return;
+      }
+
+      srcContent = grunt.file.read(src);
+
+      require('peaches')(srcContent, options, function(err, styleText) {
+        if (err) {
+          grunt.log.writeln('Peaches error: ' + err + '.');
           return;
         }
 
-        src = grunt.file.read(fpath);
-        destfile = path.join(fileObj.dest, fname);
+        // Write the destination file.
+        grunt.file.write(destfile, styleText);
 
-        require('peaches')(src, options, function(err, styleText) {
-          if (err) {
-            grunt.log.writeln('Peaches error: ' + err + '.');
-            return;
-          }
-
-          // Write the destination file.
-          grunt.file.write(destfile, styleText);
-
-          // Print a success message.
-          grunt.log.writeln('File "' + destfile + '" created.');
-        
-          // Remove temp png files
-          grunt.file.glob.sync('sprite-*.png').forEach(function(f) {
-            grunt.file.delete(f);
-          });
-
-          done();
+        // Print a success message.
+        grunt.log.writeln('File "' + destfile + '" created.');
+      
+        // Remove temp png files
+        grunt.file.glob.sync('sprite-*.png').forEach(function(f) {
+          grunt.file.delete(f);
         });
+
+        done();
       });
     });
 
