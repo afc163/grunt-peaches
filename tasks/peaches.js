@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 
     var destfile, src, srcContent;
 
-    this.files.forEach(function(fileObj) {
+    grunt.util.async.map(this.files,function(fileObj,callback){
       if( fileObj.src.length > 1 ){
         grunt.log.warn('This plugin don\'t support multi src file mapping to one dest file');
         return;
@@ -58,15 +58,12 @@ module.exports = function(grunt) {
           return;
       }
 
-      if( !grunt.file.isFile(src) ){
-        return;
-      }
-
       srcContent = grunt.file.read(src);
 
       require('peaches')(srcContent, options, function(err, styleText) {
         if (err) {
           grunt.log.writeln('Peaches error: ' + err + '.');
+          callback(err);
           return;
         }
 
@@ -80,9 +77,15 @@ module.exports = function(grunt) {
         grunt.file.glob.sync('sprite-*.png').forEach(function(f) {
           grunt.file.delete(f);
         });
+        callback(null,'done');
 
-        done();
       });
+    },function(err,results){
+      if( !err ){
+        done();
+      }else{
+        done(false);
+      }
     });
 
   });
