@@ -49,6 +49,7 @@ grunt.initConfig({
         "sort":"h" // 输出图片的排列规则, h 为竖排, v 为横排 默认为 h
       },
       files: [{
+        expand:true,
         cwd: '.build/dist',
         src: '**/*.css',
         dest: '.build/dist'
