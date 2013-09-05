@@ -1,7 +1,7 @@
 {
   "name": "grunt-peaches",
   "description": "The Grunt task for peaches.",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "author": {
     "name": "afc163",
     "email": "afc163@gmail.com"
@@ -14,7 +14,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "peaches": "~0.5.4"
+    "peaches": "~0.5.14"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.1.1",
