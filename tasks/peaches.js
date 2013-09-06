@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
-  
+
   var path = require('path');
 
   grunt.registerMultiTask('peaches', 'generate sprites image.', function() {
@@ -20,32 +20,32 @@ module.exports = function(grunt) {
     var done = this.async();
 
     // Merge task-specific and/or target-specific options with these defaults.
-      var options = this.options({
-        model: "alipay",
-        servers: {
-          "alipay": {
-            "name":"alipay",
-            "root":"./tmp",
-            "username":"liuqin.sheng",
-            "tmp":"./tmp",
-            "baseURI":"https://i.alipayobjects.com",
-            "uploadUrl":"https://ecmng.alipay.com/home/uploadFile.json"
-          },
-            "tfsdaily": {
-              "name": "tfsdaily",
-              "root": "./images",
-              "tmp": "./tmp"
-            }
-          }
-      });
-
-      if(!options.server){
-        options.server = options.servers[options.model];
+    var options = this.options({
+      model: "alipay",
+      servers: {
+        "alipay": {
+          "name": "alipay",
+          "root": "./tmp",
+          "username": "liuqin.sheng",
+          "tmp": "./tmp",
+          "baseURI": "https://i.alipayobjects.com",
+          "uploadUrl": "https://ecmng.alipay.com/home/uploadFile.json"
+        },
+        "tfsdaily": {
+          "name": "tfsdaily",
+          "root": "./images",
+          "tmp": "./tmp"
+        }
       }
+    });
+
+    if(!options.server) {
+      options.server = options.servers[options.model];
+    }
 
     var destfile, src, srcContent;
 
-    grunt.util.async.map(this.files,function(fileObj,callback){
+    grunt.util.async.map(this.files, function(fileObj, callback) {
       if( fileObj.src.length > 1 ){
         grunt.log.warn('This plugin don\'t support multi src file mapping to one dest file');
         return;
@@ -61,6 +61,7 @@ module.exports = function(grunt) {
       srcContent = grunt.file.read(src);
 
       require('peaches')(srcContent, options, function(err, styleText) {
+
         if (err) {
           grunt.log.writeln('Peaches error: ' + err + '.');
           callback(err);
@@ -72,20 +73,17 @@ module.exports = function(grunt) {
 
         // Print a success message.
         grunt.log.writeln('File "' + destfile + '" created.');
-      
+
         // Remove temp png files
         grunt.file.glob.sync('sprite-*.png').forEach(function(f) {
           grunt.file.delete(f);
         });
-        callback(null,'done');
+
+        callback(null, 'done');
 
       });
-    },function(err,results){
-      if( !err ){
-        done();
-      }else{
-        done(false);
-      }
+    }, function(err,results) {
+      done(err,results);
     });
 
   });

@@ -65,6 +65,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+### 0.2.3
+
+- Fix https://github.com/afc163/grunt-peaches/pull/4
+- Remove tmp sprite image.
+
 ### 0.2.0
 
-Support customize options.
+- Support customize options.
