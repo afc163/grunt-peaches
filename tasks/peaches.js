@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 
       });
     }, function(err,results) {
-      done(err,results);
+      err ? done(false) : done();
     });
 
   });
