@@ -48,6 +48,7 @@ module.exports = function(grunt) {
     grunt.util.async.map(this.files, function(fileObj, callback) {
       if( fileObj.src.length > 1 ){
         grunt.log.warn('This plugin don\'t support multi src file mapping to one dest file');
+        callback();
         return;
       }
 
@@ -55,6 +56,7 @@ module.exports = function(grunt) {
       var destfile = fileObj.dest;
 
       if (src.indexOf('-debug.css') > 0) {
+          callback();
           return;
       }
 
@@ -79,7 +81,7 @@ module.exports = function(grunt) {
           grunt.file.delete(f);
         });
 
-        callback(null, 'done');
+        callback();
 
       });
     }, function(err,results) {
